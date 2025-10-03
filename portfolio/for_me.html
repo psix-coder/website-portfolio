@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>psixcoder | After Hours</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        /* LA Night Sky Background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                #0a0e27 0%,
+                #1a0f2e 30%,
+                #2a1245 60%,
+                #0a0e27 100%);
+            z-index: -3;
+        }
+        
+        /* Subtle City Glow */
+        .city-glow {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: radial-gradient(ellipse at bottom, 
+                rgba(139, 0, 139, 0.15) 0%,
+                rgba(75, 0, 130, 0.1) 40%,
+                transparent 70%);
+            z-index: -2;
+        }
+        
+        /* Minimal Grid */
+        .grid {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-image: 
+                linear-gradient(rgba(139, 0, 139, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 0, 139, 0.1) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: bottom;
+            z-index: -1;
+            opacity: 0.4;
+        }
+        
+        /* Stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background-image: 
+                radial-gradient(2px 2px at 20% 30%, white, transparent),
+                radial-gradient(2px 2px at 60% 70%, white, transparent),
+                radial-gradient(1px 1px at 50% 50%, white, transparent),
+                radial-gradient(1px 1px at 80% 10%, white, transparent),
+                radial-gradient(2px 2px at 90% 60%, white, transparent);
+            background-size: 200% 200%;
+            animation: twinkle 8s ease-in-out infinite;
+            z-index: -2;
+            opacity: 0.5;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.3; }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 14, 39, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 0, 139, 0.2);
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 26px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #ff006e, #8b008b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 45px;
+            list-style: none;
+        }
+        
+        nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff006e, #8b008b);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover {
+            color: #fff;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            padding: 100px 20px;
+        }
+        
+        .hero-content h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff 0%, #ff006e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 3px;
+        }
+        
+        .aka {
+            font-size: 28px;
+            color: #ff006e;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 12px;
+            font-weight: 300;
+        }
+        
+        .tagline {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 50px;
+            font-style: italic;
+        }
+        
+        .cta {
+            display: inline-block;
+            padding: 16px 45px;
+            background: transparent;
+            border: 2px solid #ff006e;
+            color: #ff006e;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 110, 0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .cta:hover::before {
+            left: 100%;
+        }
+        
+        .cta:hover {
+            background: rgba(255, 0, 110, 0.1);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        /* Section Styling */
+        section {
+            padding: 120px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 42px;
+            text-align: center;
+            margin-bottom: 70px;
+            background: linear-gradient(135deg, #fff 0%, #8b008b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+        }
+        
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: start;
+        }
+        
+        .about-text {
+            padding: 45px;
+            background: rgba(26, 15, 46, 0.4);
+            border: 1px solid rgba(139, 0, 139, 0.2);
+            border-left: 3px solid #ff006e;
+            backdrop-filter: blur(10px);
+        }
+        
+        .about-text h3 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #ff006e;
+            font-weight: 700;
+        }
+        
+        .about-text p {
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 16px;
+            margin-bottom: 18px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .stat {
+            padding: 30px;
+            background: rgba(26, 15, 46, 0.3);
+            border: 1px solid rgba(139, 0, 139, 0.2);
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .stat:hover {
+            background: rgba(26, 15, 46, 0.6);
+            border-color: rgba(255, 0, 110, 0.4);
+            transform: translateX(10px);
+        }
+        
+        .stat-num {
+            font-size: 38px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff006e, #8b008b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        /* Skills Section */
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+        
+        .skill {
+            padding: 35px 20px;
+            text-align: center;
+            background: rgba(26, 15, 46, 0.3);
+            border: 1px solid rgba(139, 0, 139, 0.15);
+            transition: all 0.3s;
+        }
+        
+        .skill:hover {
+            background: rgba(26, 15, 46, 0.6);
+            border-color: rgba(255, 0, 110, 0.4);
+            transform: translateY(-8px);
+        }
+        
+        .skill-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        
+        .skill-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        
+        /* Projects Section */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 35px;
+        }
+        
+        .project {
+            padding: 40px;
+            background: rgba(26, 15, 46, 0.3);
+            border: 1px solid rgba(139, 0, 139, 0.2);
+            border-left: 3px solid #8b008b;
+            transition: all 0.3s;
+        }
+        
+        .project:hover {
+            background: rgba(26, 15, 46, 0.6);
+            border-left-color: #ff006e;
+            transform: translateY(-8px);
+        }
+        
+        .project-icon {
+            font-size: 42px;
+            margin-bottom: 20px;
+            opacity: 0.85;
+        }
+        
+        .project h3 {
+            font-size: 24px;
+            color: #ff006e;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .project p {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            padding: 6px 14px;
+            background: rgba(139, 0, 139, 0.2);
+            border: 1px solid rgba(139, 0, 139, 0.3);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            border-radius: 15px;
+        }
+        
+        /* Contact Section */
+        .contact {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 45px;
+            background: rgba(26, 15, 46, 0.3);
+            border: 1px solid rgba(139, 0, 139, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(10, 14, 39, 0.5);
+            border: 1px solid rgba(139, 0, 139, 0.3);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: rgba(255, 0, 110, 0.5);
+            background: rgba(10, 14, 39, 0.7);
+        }
+        
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+        
+        button {
+            padding: 16px;
+            background: transparent;
+            border: 2px solid #ff006e;
+            color: #ff006e;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: rgba(255, 0, 110, 0.1);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.3);
+        }
+        
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 45px;
+        }
+        
+        .social {
+            width: 60px;
+            height: 60px;
+            border: 1px solid rgba(139, 0, 139, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            background: rgba(26, 15, 46, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .social:hover {
+            border-color: #ff006e;
+            color: #ff006e;
+            background: rgba(26, 15, 46, 0.6);
+            transform: translateY(-5px);
+        }
+        
+        /* Footer */
+        footer {
+            padding: 35px;
+            text-align: center;
+            border-top: 1px solid rgba(139, 0, 139, 0.2);
+            background: rgba(10, 14, 39, 0.8);
+        }
+        
+        footer p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-content h1 {
+                font-size: 52px;
+            }
+            .about-grid, .projects {
+                grid-template-columns: 1fr;
+            }
+            .skills {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            section {
+                padding: 80px 30px;
+            }
+            nav {
+                padding: 20px 30px;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .hero-content h1 {
+                font-size: 38px;
+            }
+            nav ul {
+                gap: 20px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="city-glow"></div>
+    <div class="grid"></div>
+    <div class="stars"></div>
+    
+    <nav>
+        <div class="logo">psixcoder</div>
+        <ul>
+            <li><a href="#home">HOME</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#skills">SKILLS</a></li>
+            <li><a href="#projects">PROJECTS</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+    </nav>
+    
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>ABDULLOH AHMADJONOV</h1>
+            <div class="aka">aka psixcoder</div>
+            <div class="subtitle">Backend Python Django Developer</div>
+            <div class="tagline">Crafting Digital Experiences After Hours</div>
+            <a href="#projects" class="cta">View My Work</a>
+        </div>
+    </section>
+    
+    <section id="about">
+        <h2>ABOUT ME</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <h3>Junior Developer | 1+ Year Experience</h3>
+                <p>Building scalable backend solutions in the darkness of code. Specialized in Django, REST APIs, and microservices architecture. I transform complex problems into elegant solutions.</p>
+                <p>My journey in development is driven by passion for clean code, efficient systems, and the endless possibilities of technology. Like The Weeknd's After Hours, I thrive in the late-night coding sessions where creativity meets logic.</p>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-num">1+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">4+</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">100%</div>
+                    <div class="stat-label">Commitment</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">∞</div>
+                    <div class="stat-label">Learning Mindset</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="skills">
+        <h2>TECH STACK</h2>
+        <div class="skills">
+            <div class="skill">
+                <div class="skill-icon">🐍</div>
+                <div class="skill-name">Python</div>
+            </div>
+            <div class="skill">
+                <div class="skill-icon">🎯</div>
+                <div class="skill-name">Django</div>
+            </div>
+            <div class="skill">
+                <div class="skill-icon">⚡</div>
+                <div class="skill-name">DRF</div>
+            </div>
+            <div class="skill">
+                <div class="skill-icon">🗄️</div>
+                <div class="skill-name">PostgreSQL</div>
+            </div>
+            <div class="skill">
+                <div class="skill-icon">📦</div>
+                <div class="skill-name">SQLite</div>
+            </div>
+            <div class="skill">
+                <div class="skill-icon">🔐</div>
+                <div class="skill-name">JWT Auth</div>
+            </div>
+            <div class="skill">
+                <div class="skill-icon">🔄</div>
+                <div class="skill-name">REST API</div>
+            </div>
+            <div class="skill">
+                <div class="skill-icon">🐙</div>
+                <div class="skill-name">Git/GitHub</div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="projects">
+        <h2>FEATURED PROJECTS</h2>
+        <div class="projects">
+            <div class="project">
+                <div class="project-icon">🛒</div>
+                <h3>Organic Shop</h3>
+                <p>Django E-commerce Platform - Organic mahsulotlar uchun to'liq funksional online do'kon. Multi-category system, product management, image gallery, admin dashboard.</p>
+                <div class="tags">
+                    <span class="tag">Django 4.2</span>
+                    <span class="tag">SQLite</span>
+                    <span class="tag">E-commerce</span>
+                    <span class="tag">CRUD</span>
+                </div>
+            </div>
+            
+            <div class="project">
+                <div class="project-icon">📚</div>
+                <h3>Course Form</h3>
+                <p>Django Course Management System - Kurslar va darslarni boshqarish uchun to'liq funksional web ilovasi. Admin panel, CRUD operations, responsive design.</p>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Django</span>
+                    <span class="tag">SQLite</span>
+                    <span class="tag">Management</span>
+                </div>
+            </div>
+            
+            <div class="project">
+                <div class="project-icon">🏛️</div>
+                <h3>Latvian Embassy</h3>
+                <p>Embassy Meeting Booking API - Django REST Framework asosida JWT autentifikatsiya, service management va secure appointment scheduling tizimi.</p>
+                <div class="tags">
+                    <span class="tag">DRF</span>
+                    <span class="tag">JWT</span>
+                    <span class="tag">SQLite</span>
+                    <span class="tag">API</span>
+                </div>
+            </div>
+            
+            <div class="project">
+                <div class="project-icon">👥</div>
+                <h3>Microservice Shop</h3>
+                <p>User Microservice - JWT authentication, user profiles, va Django REST Framework asosida yaratilgan mikroservis. Custom User Model, CORS, Registration/Login API endpoints.</p>
+                <div class="tags">
+                    <span class="tag">Microservices</span>
+                    <span class="tag">DRF</span>
+                    <span class="tag">JWT</span>
+                    <span class="tag">CORS</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact">
+        <h2>GET IN TOUCH</h2>
+        <div class="contact">
+            <form>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="text" placeholder="Subject">
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+            
+            <div class="socials">
+                <a href="https://x.com/psixcoder" class="social" target="_blank">𝕏</a>
+                <a href="https://www.linkedin.com/in/abdulloh-axmadjonov" class="social" target="_blank">in</a>
+                <a href="https://instagram.com/psixcoder" class="social" target="_blank">IG</a>
+                <a href="https://t.me/ahmadjoonov_abdulloh" class="social" target="_blank">TG</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2024 psixcoder | Crafted After Hours | All Rights Reserved</p>
+    </footer>
+    
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(a.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        document.querySelector('form').addEventListener('submit', e => {
+            e.preventDefault();
+            alert('Message sent! Thank you for reaching out. I will get back to you soon.');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
